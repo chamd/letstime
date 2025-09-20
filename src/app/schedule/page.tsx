@@ -42,7 +42,7 @@ const Schedule = () => {
 
   return (
 		<>
-			<div className="w-full max-w-91 flex flex-col gap-1 mx-auto">
+			<div className="w-full max-w-91 flex flex-col gap-1 mx-auto py-2">
 				<div className="flex flex-row gap-1 h-6 text-center font-bold w-full">
 					<div className={`${headerStyle} w-6`}></div>
 					<div className={`${headerStyle} w-16`}>월</div>
