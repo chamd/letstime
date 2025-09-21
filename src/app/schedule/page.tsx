@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type ScheduleItem = {
   title: string;
@@ -36,9 +36,17 @@ const Schedule = () => {
       const newSchedule = { ...prev };
       if (!newSchedule[day]) newSchedule[day] = {};
       newSchedule[day][time] = { title, long: long || 1, color };
+      localStorage.setItem("scheduleData", JSON.stringify(newSchedule));
       return newSchedule;
     });
   };
+
+  useEffect(() => {
+    const scheduleData = localStorage.getItem("scheduleData");
+    const scheduleObject = JSON.parse(scheduleData || "{}");
+    setSchedule(scheduleObject);
+  }, [])
+  
 
   return (
 		<>
@@ -72,8 +80,8 @@ const Schedule = () => {
                 }
 
                 const l = item?.long || 1;
-                const rowHeight = 4;   // 1칸 = 4rem
-                const gapHeight = 0.25; // gap-1 = 0.25rem
+                const rowHeight = 4;
+                const gapHeight = 0.25;
                 const height = rowHeight * l + gapHeight * (l - 1);
 
                 return (
