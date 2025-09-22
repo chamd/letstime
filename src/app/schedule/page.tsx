@@ -1,18 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
-type ScheduleItem = {
-  title: string;
-  long: number;
-  color: string;
-};
-
-type ScheduleState = {
-  [day: number]: {
-    [time: number]: ScheduleItem;
-  };
-};
+import useModal from "@/hooks/useScheduleModal";
+import { ScheduleItem, ScheduleState } from "@/utils/Schedule";
 
 const headerStyle = "bg-slate-300 rounded-lg shrink-0";
 const colors = [
@@ -24,22 +14,36 @@ const colors = [
 
 const Schedule = () => {
   const [schedule, setSchedule] = useState<ScheduleState>({});
-
-  const handleSetSchedule = (time: number, day: number) => {
-    const title = prompt("일정 입력", "");
-    const long = Number(prompt("시간 입력", ""));
-    const color = colors[Math.floor(Math.random() * colors.length)];
-
-    if (!title) return;
-
+  const [selectedDay, setSelectedDay] = useState(0);
+  const [selectedTime, setSelectedTime] = useState(7);
+  const { open, close, Modal } = useModal();
+  
+  const handleSetSchedule = (t: number, d: number) => {
+    setSelectedTime(t);
+    setSelectedDay(d);
+    open();
+  };
+  
+  const handleSubmit = (data: ScheduleItem) => {
     setSchedule((prev) => {
       const newSchedule = { ...prev };
-      if (!newSchedule[day]) newSchedule[day] = {};
-      newSchedule[day][time] = { title, long: long || 1, color };
+      if (!newSchedule[selectedDay]) newSchedule[selectedDay] = {};
+      newSchedule[selectedDay][selectedTime] = data;
       localStorage.setItem("scheduleData", JSON.stringify(newSchedule));
       return newSchedule;
     });
+    close();
   };
+
+  const handleDelete = () => {
+    setSchedule((prev) => {
+      const newSchedule = { ...prev };
+      delete newSchedule[selectedDay][selectedTime];      
+      localStorage.setItem("scheduleData", JSON.stringify(newSchedule));
+      return newSchedule;
+    });
+    close();
+  }
 
   useEffect(() => {
     const scheduleData = localStorage.getItem("scheduleData");
@@ -50,6 +54,7 @@ const Schedule = () => {
 
   return (
 		<>
+      {Modal({ onSubmit: handleSubmit, onDelete: handleDelete })}
 			<div className="w-full max-w-91 flex flex-col gap-1 mx-auto py-2">
 				<div className="flex flex-row gap-1 h-6 text-center font-bold w-full">
 					<div className={`${headerStyle} w-6`}></div>
@@ -88,6 +93,7 @@ const Schedule = () => {
                   <div 
                     key={`${day}-${time}`}
                     onClick={() => handleSetSchedule(time, day)}
+                    // onClick={open}
                     className={`text-slate-50 text-lg rounded-lg w-16 p-1 overflow-hidden break-words ${schedule[day]?.[time]?.color || "bg-slate-200"}`}
                     style={{ height: `${height}rem` }}
                   >

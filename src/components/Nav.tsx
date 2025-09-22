@@ -23,7 +23,7 @@ const Nav = () => {
 
   const handleNav = (num: number, url: string) => {
     setSelectedNav(num);
-    router.push(url);
+    router.replace(url);
   };
 
   return (
