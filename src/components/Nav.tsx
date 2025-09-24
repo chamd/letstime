@@ -2,14 +2,14 @@
 
 import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { GoHome, GoCalendar, GoGear } from "react-icons/go";
+import { GoHome, GoCheckbox, GoCalendar, GoGear } from "react-icons/go";
 
 const navItemStyle = "w-10 text-3xl flex place-content-center items-center duration-200";
 const navDefaultStyle = "text-slate-400";
 const navSelectedStyle = "text-blue-500 border-b-3 border-blue-500 mb-1";
 
-const navItems = [GoHome, GoCalendar, GoGear];
-const urls = ["/", "/schedule", "/setting"];
+const navItems = [GoHome, GoCheckbox, GoCalendar, GoGear];
+const urls = ["/", "/todo", "/schedule", "/setting"];
 
 const Nav = () => {
   const router = useRouter();

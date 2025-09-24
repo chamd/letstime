@@ -80,7 +80,7 @@ const ScheduleModal = ({ onClose, onSubmit, onDelete, selectedItem }: Props) => 
               <label 
                 key={index}
                 className={`
-                  w-8 h-8 block rounded-full duration-200 cursor-pointer
+                  w-8 h-8 block rounded-full duration-200
                   ${ScheduleUtil.getColorById(index)}
                   ${colorId === index ? 'scale-120 shadow-lg shadow-slate-400' : ''}
                 `}

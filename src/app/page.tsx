@@ -31,15 +31,15 @@ const Home = () => {
     };
   }, [now]);
 
-
 	return (
 		<>
 			<div className="w-full max-w-91 mx-auto py-2">
 
-				<div className="
-					bg-slate-700 rounded-full w-30 h-10 
-					text-slate-50 text-lg font-bold text-center leading-10
-					mx-auto bottom-18 left-0 right-0 fixed z-2
+				<div 
+					className="
+						bg-slate-700 rounded-full w-30 h-10 
+						text-slate-50 font-bold text-center leading-10
+						mx-auto bottom-18 left-0 right-0 fixed z-2
 				">
 					{dayNames[kst.today]}({kst.todate})
 				</div>
@@ -50,8 +50,8 @@ const Home = () => {
 							<div 
 								key={time} 
 								className={`
-									rounded-lg w-6 h-16 text-center font-bold 
-									${kst.tohour == time ? "bg-blue-500 text-slate-50 scale-115" : "bg-slate-300 text-slate-950"}
+									rounded-lg w-6 h-16 text-center font-bold duration-200
+									${kst.tohour == time ? "bg-blue-500 text-slate-50 outline-blue-500 outline-4 rounded-r-none" : "bg-slate-300 text-slate-950"}
 								`}
 							>
 									{time}
@@ -82,8 +82,8 @@ const Home = () => {
 								<div
 									key={`${kst.today}-${time}`}
 									className={`
-										text-slate-50 text-lg rounded-lg w-full p-1 overflow-hidden break-words 
-										${kst.tohour == time ? "outline-blue-500 outline-4" : ""}
+										text-slate-50 text-lg rounded-lg w-full p-1 overflow-hidden break-words duration-200
+										${kst.tohour == time ? "outline-blue-500 outline-4 rounded-l-none" : ""}
 										${ScheduleUtil.getColorById(
 											schedule[kst.today]?.[time]?.colorId
 										)}

@@ -10,13 +10,18 @@ type ScheduleState = {
   };
 };
 
-const colors = ["red", "amber", "lime", "emerald", "sky", "blue", "purple"];
+const colors = [
+  "bg-red-400",
+  "bg-amber-400",
+  "bg-lime-400",
+  "bg-emerald-400",
+  "bg-sky-400",
+  "bg-blue-400",
+  "bg-purple-400",
+];
 
-const getColorById = (id: number): string => {    
-  if (0 <= id && id <= 6) {
-    return `bg-${colors[id]}-400`;
-  }
-  return "bg-slate-200";
+const getColorById = (id: number): string => {
+  return colors[id] ?? "bg-slate-200";
 }
 
 const ScheduleUtil = { colors, getColorById };

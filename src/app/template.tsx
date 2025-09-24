@@ -9,7 +9,7 @@ export default function Template({
 }) {
   return (
     <motion.div
-      initial={{ y: 1, opacity: 0 }}
+      initial={{ y: 2, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ ease: "easeIn", duration: 0.15 }}
     >
