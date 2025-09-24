@@ -27,7 +27,7 @@ const Nav = () => {
   };
 
   return (
-    <nav className="w-full h-16 fixed bottom-0 bg-slate-100">
+    <nav className="w-full h-16 fixed bottom-0 bg-slate-100 z-2">
       <ul className="flex flex-row place-content-evenly h-full">
         {navItems.map((Item, index) => (
           <li

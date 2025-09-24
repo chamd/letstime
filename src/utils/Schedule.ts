@@ -1,7 +1,7 @@
 type ScheduleItem = {
   title: string;
   long: number;
-  color: string;
+  colorId: number;
 };
 
 type ScheduleState = {
@@ -10,4 +10,16 @@ type ScheduleState = {
   };
 };
 
-export type { ScheduleItem, ScheduleState };
+const colors = ["red", "amber", "lime", "emerald", "sky", "blue", "purple"];
+
+const getColorById = (id: number): string => {    
+  if (0 <= id && id <= 6) {
+    return `bg-${colors[id]}-400`;
+  }
+  return "bg-slate-200";
+}
+
+const ScheduleUtil = { colors, getColorById };
+
+export type { ScheduleItem, ScheduleState }
+export default ScheduleUtil;

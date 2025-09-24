@@ -1,22 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import useModal from "@/hooks/useScheduleModal";
-import { ScheduleItem, ScheduleState } from "@/utils/Schedule";
+import { AnimatePresence } from "framer-motion";
+import ScheduleModal from "@/components/ScheduleModal";
+import ScheduleUtil, { ScheduleItem, ScheduleState } from "@/utils/Schedule";
+import useModal from "@/hooks/useModal";
 
 const headerStyle = "bg-slate-300 rounded-lg shrink-0";
-const colors = [
-  "bg-red-500", "bg-orange-500", "bg-amber-500", "bg-yellow-500",
-  "bg-lime-500", "bg-green-500", "bg-emerald-500", "bg-teal-500",
-  "bg-cyan-500", "bg-sky-500", "bg-blue-500", "bg-indigo-500",
-  "bg-violet-500", "bg-purple-500", "bg-fuchsia-500", "bg-pink-500", "bg-rose-500"
-];
 
 const Schedule = () => {
   const [schedule, setSchedule] = useState<ScheduleState>({});
   const [selectedDay, setSelectedDay] = useState(0);
   const [selectedTime, setSelectedTime] = useState(7);
-  const { open, close, Modal } = useModal();
+  const { isOpen, open, close } = useModal();
   
   const handleSetSchedule = (t: number, d: number) => {
     setSelectedTime(t);
@@ -45,6 +41,10 @@ const Schedule = () => {
     close();
   }
 
+  const getSelectedItem = (): ScheduleItem => {
+    return schedule[selectedDay]?.[selectedTime];
+  }
+
   useEffect(() => {
     const scheduleData = localStorage.getItem("scheduleData");
     const scheduleObject = JSON.parse(scheduleData || "{}");
@@ -54,7 +54,16 @@ const Schedule = () => {
 
   return (
 		<>
-      {Modal({ onSubmit: handleSubmit, onDelete: handleDelete })}
+      <AnimatePresence>
+        {isOpen && (
+          <ScheduleModal
+            onClose={close}
+            onSubmit={handleSubmit}
+            onDelete={handleDelete}
+            selectedItem={getSelectedItem()}
+          />
+        )}
+      </AnimatePresence>
 			<div className="w-full max-w-91 flex flex-col gap-1 mx-auto py-2">
 				<div className="flex flex-row gap-1 h-6 text-center font-bold w-full">
 					<div className={`${headerStyle} w-6`}></div>
@@ -70,7 +79,7 @@ const Schedule = () => {
 							<div key={time} className="bg-slate-300 rounded-lg w-6 h-16 text-center font-bold">{time}</div>
 						))}
 					</div>
-					{[0, 1, 2, 3, 4].map((day) => (
+					{[1, 2, 3, 4, 5].map((day) => (
             <div key={day} className="flex flex-col gap-1 w-full">
               {Array.from({ length: 18 }, (_, i) => i + 7).map((time) => {
                 const item = schedule[day]?.[time];
@@ -93,8 +102,7 @@ const Schedule = () => {
                   <div 
                     key={`${day}-${time}`}
                     onClick={() => handleSetSchedule(time, day)}
-                    // onClick={open}
-                    className={`text-slate-50 text-lg rounded-lg w-16 p-1 overflow-hidden break-words ${schedule[day]?.[time]?.color || "bg-slate-200"}`}
+                    className={`text-slate-50 text-lg rounded-lg w-16 p-1 overflow-hidden break-words ${ScheduleUtil.getColorById(schedule[day]?.[time]?.colorId)}`}
                     style={{ height: `${height}rem` }}
                   >
                     {schedule[day]?.[time]?.title || ""}
