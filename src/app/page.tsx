@@ -51,7 +51,7 @@ const Home = () => {
 								key={time} 
 								className={`
 									rounded-lg w-6 h-16 text-center font-bold duration-200
-									${kst.tohour == time ? "bg-blue-500 text-slate-50 outline-blue-500 outline-4 rounded-r-none" : "bg-slate-300 text-slate-950"}
+									${kst.tohour == time ? "bg-blue-500 text-slate-50 scale-120" : "bg-slate-300 text-slate-950"}
 								`}
 							>
 									{time}
@@ -82,15 +82,18 @@ const Home = () => {
 								<div
 									key={`${kst.today}-${time}`}
 									className={`
-										text-slate-50 text-xs rounded-lg w-full p-0.5 overflow-hidden break-words duration-200
-										${kst.tohour == time ? "outline-blue-500 outline-4 rounded-l-none" : ""}
-										${ScheduleUtil.getColorById(
-											schedule[kst.today]?.[time]?.colorId
-										)}
+										rounded-lg w-full duration-200 bg-slate-200
 									`}
 									style={{ height: `${height}rem` }}
 								>
-									{schedule[kst.today]?.[time]?.title || ""}
+									<div className={`
+									text-slate-50 text-xs font-bold w-full rounded-t-lg h-4 pl-2
+										${ScheduleUtil.getColorById(
+											schedule[kst.today]?.[time]?.colorId
+										)}
+									`}>
+										{schedule[kst.today]?.[time]?.title || ""}
+									</div>
 								</div>
 							);
 						})}

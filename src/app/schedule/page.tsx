@@ -102,7 +102,7 @@ const Schedule = () => {
                   <div 
                     key={`${day}-${time}`}
                     onClick={() => handleSetSchedule(time, day)}
-                    className={`text-slate-50 text-base rounded-lg w-16 p-1 overflow-hidden break-words ${ScheduleUtil.getColorById(schedule[day]?.[time]?.colorId)}`}
+                    className={`text-slate-50 text-sm rounded-lg w-16 p-1 overflow-hidden break-words ${ScheduleUtil.getColorById(schedule[day]?.[time]?.colorId)}`}
                     style={{ height: `${height}rem` }}
                   >
                     {schedule[day]?.[time]?.title || ""}
