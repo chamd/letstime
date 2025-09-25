@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 
 const title = {
+  "/todo": "할일",
   "/schedule": "고정 시간표",
   "/setting": "설정"
 }

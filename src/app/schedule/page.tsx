@@ -75,13 +75,13 @@ const Schedule = () => {
 				</div>
 				<div className="flex flex-row gap-1">
 					<div className="flex flex-col gap-1">
-						{Array.from({ length: 18 }, (_, i) => i + 7).map((time) => (
+						{Array.from({ length: 17 }, (_, i) => i + 7).map((time) => (
 							<div key={time} className="bg-slate-300 rounded-lg w-6 h-16 text-center font-bold">{time}</div>
 						))}
 					</div>
 					{[1, 2, 3, 4, 5].map((day) => (
             <div key={day} className="flex flex-col gap-1 w-full">
-              {Array.from({ length: 18 }, (_, i) => i + 7).map((time) => {
+              {Array.from({ length: 17 }, (_, i) => i + 7).map((time) => {
                 const item = schedule[day]?.[time];
 
                 const isCovered = Object.entries(schedule[day] || {}).some(([start, v]) => {
@@ -102,7 +102,7 @@ const Schedule = () => {
                   <div 
                     key={`${day}-${time}`}
                     onClick={() => handleSetSchedule(time, day)}
-                    className={`text-slate-50 text-lg rounded-lg w-16 p-1 overflow-hidden break-words ${ScheduleUtil.getColorById(schedule[day]?.[time]?.colorId)}`}
+                    className={`text-slate-50 text-base rounded-lg w-16 p-1 overflow-hidden break-words ${ScheduleUtil.getColorById(schedule[day]?.[time]?.colorId)}`}
                     style={{ height: `${height}rem` }}
                   >
                     {schedule[day]?.[time]?.title || ""}

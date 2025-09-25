@@ -46,7 +46,7 @@ const Home = () => {
 
 				<div className="flex flex-row gap-1 pb-12">
 					<div className="flex flex-col gap-1">
-						{Array.from({ length: 18 }, (_, i) => i + 7).map((time) => (
+						{Array.from({ length: 17 }, (_, i) => i + 7).map((time) => (
 							<div 
 								key={time} 
 								className={`
@@ -59,7 +59,7 @@ const Home = () => {
 						))}
 					</div>
 					<div className="flex flex-col gap-1 w-full">
-						{Array.from({ length: 18 }, (_, i) => i + 7).map((time) => {
+						{Array.from({ length: 17 }, (_, i) => i + 7).map((time) => {
 							const item = schedule[kst.today]?.[time];
 
 							const isCovered = Object.entries(schedule[kst.today] || {}).some(
@@ -82,7 +82,7 @@ const Home = () => {
 								<div
 									key={`${kst.today}-${time}`}
 									className={`
-										text-slate-50 text-lg rounded-lg w-full p-1 overflow-hidden break-words duration-200
+										text-slate-50 text-xs rounded-lg w-full p-0.5 overflow-hidden break-words duration-200
 										${kst.tohour == time ? "outline-blue-500 outline-4 rounded-l-none" : ""}
 										${ScheduleUtil.getColorById(
 											schedule[kst.today]?.[time]?.colorId
