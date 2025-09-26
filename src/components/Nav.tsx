@@ -31,7 +31,7 @@ const Nav = () => {
               selectedNav === index ? navSelectedStyle : navDefaultStyle
             }`}
           >
-            <Link href={urls[index]}>
+            <Link href={urls[index]} replace>
               <Item />
             </Link>
           </li>
