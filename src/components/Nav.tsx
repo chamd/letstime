@@ -1,7 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useEffect } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { GoHome, GoCheckbox, GoCalendar, GoGear } from "react-icons/go";
 
 const navItemStyle = "w-10 text-3xl flex place-content-center items-center duration-200";
@@ -12,7 +13,6 @@ const navItems = [GoHome, GoCheckbox, GoCalendar, GoGear];
 const urls = ["/", "/todo", "/schedule", "/setting"];
 
 const Nav = () => {
-  const router = useRouter();
   const pathname = usePathname();
   const [selectedNav, setSelectedNav] = useState(0);
 
@@ -20,11 +20,6 @@ const Nav = () => {
     const index = urls.findIndex((url) => url === pathname);
     if (index !== -1) setSelectedNav(index);
   }, [pathname]);
-
-  const handleNav = (num: number, url: string) => {
-    setSelectedNav(num);
-    router.replace(url);
-  };
 
   return (
     <nav className="w-full h-16 fixed bottom-0 bg-slate-100 z-2">
@@ -35,9 +30,10 @@ const Nav = () => {
             className={`${navItemStyle} ${
               selectedNav === index ? navSelectedStyle : navDefaultStyle
             }`}
-            onClick={() => handleNav(index, urls[index])}
           >
-            <Item />
+            <Link href={urls[index]}>
+              <Item />
+            </Link>
           </li>
         ))}
       </ul>

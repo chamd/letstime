@@ -27,15 +27,19 @@ const BlockButton = ({ onClick, children }: {
 };
 
 const Setting = () => {
-	const handleClearData = () => {
-		localStorage.setItem("scheduleData", "{}");
+	const handleClearData = (name: string) => {
+		localStorage.setItem(name, "{}");
 	}
 
 	return (
 		<div className="p-4 flex flex-col gap-3">
 			<Block>
-				일정 데이터 삭제
-				<BlockButton onClick={handleClearData}>삭제</BlockButton>
+				고정 스케쥴 데이터 삭제
+				<BlockButton onClick={() => handleClearData("scheduleData")}>삭제</BlockButton>
+			</Block>
+			<Block>
+				하루 스케쥴 데이터 삭제
+				<BlockButton onClick={() => handleClearData("subScheduleData")}>삭제</BlockButton>
 			</Block>
 		</div>
 	);

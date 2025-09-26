@@ -1,13 +1,19 @@
 "use client";
+export const dynamic = 'force-dynamic';
 
 import { useState, useEffect, useMemo } from "react";
-import ScheduleUtil, { ScheduleState } from "@/utils/Schedule";
+import ScheduleUtil, { ScheduleState, SubScheduleItem, SubScheduleState } from "@/utils/Schedule";
 
 const dayNames = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
 const timeZone = 'Asia/Seoul';
 
 const Home = () => {
 	const [schedule, setSchedule] = useState<ScheduleState>({});
+	const [subSchedule, setSubSchedule] = useState<SubScheduleState>({
+		yesterday: {},
+		today: {},
+		tomorrow: {}
+	});
 	const [now, setNow] = useState(new Date());
 	
   useEffect(() => {
@@ -15,6 +21,10 @@ const Home = () => {
     const scheduleObject = JSON.parse(scheduleData || "{}");
     setSchedule(scheduleObject);
 
+    const subScheduleData = localStorage.getItem("subScheduleData");
+    const subScheduleObject = JSON.parse(subScheduleData || "{}");
+    setSubSchedule(subScheduleObject);
+		
     const interval = setInterval(() => {
       setNow(new Date());
     }, 60000);
@@ -30,6 +40,27 @@ const Home = () => {
       tohour: d.getHours(),
     };
   }, [now]);
+
+	const handleSetSubSchedule = (time: number) => {
+		const title = prompt("title?", "") || "세부 일정";
+		const colorIdStr = prompt("colorId", "") || 0;
+		const colorId = Number(colorIdStr);
+
+		setSubSchedule((prev) => {
+				const prevState = prev ?? { yesterday: {}, today: {}, tomorrow: {} };
+				const newToday = { ...(prevState.today || {}) };
+				const newTimeArray = [...(newToday[time] || [])];
+				newTimeArray.push({ title, colorId });
+				newToday[time] = newTimeArray as [SubScheduleItem];
+				const newSubSchedule = {
+						...prevState,
+						today: newToday,
+				};
+
+				localStorage.setItem("subScheduleData", JSON.stringify(newSubSchedule));
+				return newSubSchedule;
+		});
+	}
 
 	return (
 		<>
@@ -82,17 +113,32 @@ const Home = () => {
 								<div
 									key={`${kst.today}-${time}`}
 									className={`
-										rounded-lg w-full duration-200 bg-slate-200
+										rounded-lg w-full bg-slate-200 relative p-1 flex gap-1
 									`}
 									style={{ height: `${height}rem` }}
+									onClick={() => handleSetSubSchedule(time)}
 								>
 									<div className={`
-									text-slate-50 text-xs font-bold w-full rounded-t-lg h-4 pl-2
+										w-2 h-full rounded-full
 										${ScheduleUtil.getColorById(
 											schedule[kst.today]?.[time]?.colorId
 										)}
 									`}>
-										{schedule[kst.today]?.[time]?.title || ""}
+									</div>
+									<div className="flex flex-col text-xs gap-1 flex-wrap">
+										{schedule[kst.today]?.[time] && (
+											<div className="text-slate-600 font-bold">
+												{schedule[kst.today][time].title || ""}
+											</div>
+										)}
+										{subSchedule?.today?.[time]?.map((sub, index) => (
+											<div 
+												key={`today-${time}-${index}`}
+												className={`${ScheduleUtil.getColorById(sub.colorId)} text-slate-50 px-2 rounded-full`}
+											>
+												{sub.title}
+											</div>
+										))}
 									</div>
 								</div>
 							);
