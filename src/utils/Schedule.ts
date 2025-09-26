@@ -15,7 +15,9 @@ enum SubScheduleDay {
   Today = 'today',
   Tomorrow = 'tomorrow'
 };
+
 type SubScheduleItem = {
+  id: string;
   title: string;
   colorId: number;
 }

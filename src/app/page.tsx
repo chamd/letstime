@@ -2,9 +2,14 @@
 
 import { useState, useEffect, useMemo } from "react";
 import ScheduleUtil, { ScheduleState, SubScheduleItem, SubScheduleState } from "@/utils/Schedule";
+import useModal from "@/hooks/useModal";
+import { AnimatePresence } from "framer-motion";
+import SubScheduleModal from "@/components/SubScheduleModal";
 
 const dayNames = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
 const timeZone = 'Asia/Seoul';
+const TOTAL_HOURS = 17;
+const START_HOUR = 7;
 
 const Home = () => {
 	const [schedule, setSchedule] = useState<ScheduleState>({});
@@ -14,6 +19,9 @@ const Home = () => {
 		tomorrow: {}
 	});
 	const [now, setNow] = useState(new Date());
+	const [selectedTime, setSelectedTime] = useState<number>(START_HOUR);
+	const [selectedItem, setSelectedItem] = useState<SubScheduleItem | null>(null);
+	const { isOpen, open, close } = useModal();
 	
   useEffect(() => {
     const scheduleData = localStorage.getItem("scheduleData");
@@ -33,7 +41,6 @@ const Home = () => {
 
 	const kst = useMemo(() => {
     const d = new Date(now.toLocaleString('en-US', { timeZone }));
-		console.log(d.getHours());
 		
     return {
       today: d.getDay(),
@@ -42,31 +49,78 @@ const Home = () => {
     };
   }, [now]);
 
-	const handleSetSubSchedule = (time: number) => {
-		const title = prompt("title?", "") || "세부 일정";
-		const colorIdStr = prompt("colorId", "") || 0;
-		const colorId = Number(colorIdStr);
-
+	const handleSubmit = (data: SubScheduleItem) => {
 		setSubSchedule((prev) => {
-				const prevState = prev ?? { yesterday: {}, today: {}, tomorrow: {} };
-				const newToday = { ...(prevState.today || {}) };
-				const newTimeArray = [...(newToday[time] || [])];
-				newTimeArray.push({ title, colorId });
-				newToday[time] = newTimeArray as [SubScheduleItem];
+				const newToday = { ...(prev.today || {}) };
+				const newTimeArray = [...(newToday[selectedTime] || [])];
+				const index = newTimeArray.findIndex(o => o.id === data.id)
+				if (index > -1) {
+					newTimeArray[index] = data;
+				} else {
+					newTimeArray.push(data);
+				}
+				newToday[selectedTime] = newTimeArray as [SubScheduleItem];
 				const newSubSchedule = {
-						...prevState,
+						...prev,
 						today: newToday,
 				};
 
 				localStorage.setItem("subScheduleData", JSON.stringify(newSubSchedule));
 				return newSubSchedule;
 		});
+    close();
+  };
+
+	const handleDelete = () => {
+		setSubSchedule((prev) => {
+				const newToday = { ...(prev.today || {}) };
+				const newTimeArray = [...(newToday[selectedTime] || [])];
+				const index = newTimeArray.findIndex(o => o.id === selectedItem?.id)
+				if (index > -1) {
+					newTimeArray.splice(index, 1);
+				}
+				newToday[selectedTime] = newTimeArray as [SubScheduleItem];
+				const newSubSchedule = {
+						...prev,
+						today: newToday,
+				};
+
+				localStorage.setItem("subScheduleData", JSON.stringify(newSubSchedule));
+				return newSubSchedule;
+		});
+    close();
+  };
+
+	const handleAddSubSchedule = (t: number) => {
+		setSelectedTime(t);
+		setSelectedItem(null);
+		open();
+	}
+
+	const handleSetSubSchedule = (
+		e: React.MouseEvent<HTMLDivElement, MouseEvent>, 
+		t: number,
+		item: SubScheduleItem
+	) => {
+		e.stopPropagation();
+		setSelectedTime(t);
+		setSelectedItem(item);
+		open();
 	}
 
 	return (
 		<>
+			<AnimatePresence>
+        {isOpen && (
+          <SubScheduleModal
+            onClose={close}
+            onSubmit={handleSubmit}
+            onDelete={handleDelete}
+            selectedItem={selectedItem}
+          />
+        )}
+      </AnimatePresence>
 			<div className="w-full max-w-91 mx-auto py-2">
-
 				<div 
 					className="
 						bg-slate-700 rounded-full w-30 h-10 
@@ -78,7 +132,7 @@ const Home = () => {
 
 				<div className="flex flex-row gap-1 pb-12">
 					<div className="flex flex-col gap-1">
-						{Array.from({ length: 17 }, (_, i) => i + 7).map((time) => (
+						{Array.from({ length: TOTAL_HOURS }, (_, i) => i + START_HOUR).map((time) => (
 							<div 
 								key={time} 
 								className={`
@@ -91,7 +145,7 @@ const Home = () => {
 						))}
 					</div>
 					<div className="flex flex-col gap-1 w-full">
-						{Array.from({ length: 17 }, (_, i) => i + 7).map((time) => {
+						{Array.from({ length: TOTAL_HOURS }, (_, i) => i + START_HOUR).map((time) => {
 							const item = schedule[kst.today]?.[time];
 
 							const isCovered = Object.entries(schedule[kst.today] || {}).some(
@@ -117,7 +171,7 @@ const Home = () => {
 										rounded-lg w-full bg-slate-200 relative p-1 flex gap-1
 									`}
 									style={{ height: `${height}rem` }}
-									onClick={() => handleSetSubSchedule(time)}
+									onClick={() => handleAddSubSchedule(time)}
 								>
 									<div className={`
 										w-2 h-full rounded-full
@@ -135,7 +189,8 @@ const Home = () => {
 										{subSchedule?.today?.[time]?.map((sub, index) => (
 											<div 
 												key={`today-${time}-${index}`}
-												className={`${ScheduleUtil.getColorById(sub.colorId)} text-slate-50 px-2 rounded-full`}
+												className={`${ScheduleUtil.getColorById(sub.colorId)} text-slate-50 px-2 rounded-full w-auto text-center`}
+												onClick={(e) => handleSetSubSchedule(e, time, sub)}
 											>
 												{sub.title}
 											</div>
@@ -146,7 +201,6 @@ const Home = () => {
 						})}
 					</div>
 				</div>
-				{now.getHours()}
 			</div>
 		</>
 	);
