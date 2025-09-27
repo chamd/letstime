@@ -4,8 +4,8 @@ import Header from "@/components/Header";
 import Nav from "@/components/Nav";
 
 export const metadata: Metadata = {
-  title: "Timetable",
-  description: "시간 관리 레쓰고",
+  title: "Time",
+  description: "시간을 Compact하게 관리하다. Time.",
 };
 
 export default function RootLayout({

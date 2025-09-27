@@ -13,7 +13,7 @@ const Header = () => {
 
   return (
     <header className="w-full h-16 fixed top-0 bg-slate-100 text-2xl font-bold flex items-center place-content-center z-2">
-      {title[pathname as keyof typeof title] || "LETSTIME"}
+      {title[pathname as keyof typeof title] || "Time"}
     </header>
   );
 };
