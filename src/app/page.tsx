@@ -6,7 +6,7 @@ import useModal from "@/hooks/useModal";
 import { AnimatePresence } from "framer-motion";
 import SubScheduleModal from "@/components/SubScheduleModal";
 
-const dayNames = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
+const dayNames = ["일", "월", "화", "수", "목", "금", "토"];
 const timeZone = 'Asia/Seoul';
 const TOTAL_HOURS = 17;
 const START_HOUR = 7;
@@ -127,7 +127,7 @@ const Home = () => {
 						text-slate-50 font-bold text-center leading-10
 						mx-auto bottom-18 left-0 right-0 fixed z-2
 				">
-					{dayNames[kst.today]}({kst.todate})
+					{dayNames[kst.today]}({kst.todate}) {kst.tohour}시
 				</div>
 
 				<div className="flex flex-row gap-1 pb-12">

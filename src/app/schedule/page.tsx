@@ -75,10 +75,16 @@ const Schedule = () => {
         )}
       </AnimatePresence>
 			<div className="w-full max-w-91 flex flex-col gap-1 mx-auto py-2">
-				<div className="flex flex-row gap-1 h-6 text-center font-bold w-full justify-center">
+				<div className="flex flex-row gap-1 h-6 text-center font-bold w-full justify-between">
 					<div 
             onClick={toogleView}
-            className={`${headerStyle} w-6 flex items-center justify-center text-xl duration-100 active:scale-90`}
+            className={`
+              ${headerStyle} 
+              w-6 text-lg 
+              flex items-center justify-center 
+              border-2 border-slate-400
+              duration-100 active:scale-90
+            `}
           >
             {isWeekend ? <IoMoon /> : <IoSunny />}
           </div>
@@ -86,7 +92,7 @@ const Schedule = () => {
             <div key={day} className={`${headerStyle} ${isWeekend ? "w-41" : "w-16"}`}>{dayNames[day]}</div>
           ))}
 				</div>
-				<div className="flex flex-row gap-1 justify-center">
+				<div className="flex flex-row gap-1 justify-between">
 					<div className="flex flex-col gap-1">
 						{Array.from({ length: TOTAL_HOURS }, (_, i) => i + START_HOUR).map((time) => (
 							<div key={time} className="bg-slate-300 rounded-lg w-6 h-16 text-center font-bold">{time}</div>
