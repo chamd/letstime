@@ -9,22 +9,10 @@ export default function manifest(): MetadataRoute.Manifest {
     background_color: "#f8fafc",
     icons: [
       {
-        src: "/android/192.png",
-        sizes: "192x192",
-        type: "image/png",
-        purpose: "maskable",
-      },
-      {
         src: "/android/512.png",
         sizes: "512x512",
         type: "image/png",
         purpose: "maskable",
-      },
-      {
-        src: "/ios/192.png",
-        sizes: "192x192",
-        type: "image/png",
-        purpose: "any",
       },
       {
         src: "/ios/512.png",
