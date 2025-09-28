@@ -6,6 +6,8 @@ import Nav from "@/components/Nav";
 export const metadata: Metadata = {
   title: "Time",
   description: "시간을 Compact하게 관리하다. Time.",
+  manifest: "/manifest.json",
+  themeColor: "#f8fafc",
 };
 
 export default function RootLayout({
