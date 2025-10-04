@@ -7,7 +7,7 @@ import ScheduleModal from "@/components/ScheduleModal";
 import ScheduleUtil, { ScheduleItem, ScheduleState } from "@/utils/Schedule";
 import useModal from "@/hooks/useModal";
 
-const headerStyle = "bg-slate-300 rounded-lg shrink-0";
+const headerStyle = "bg-slate-300 rounded-xl shrink-0 shadow-md";
 const dayNames = ["일", "월", "화", "수", "목", "금", "토"];
 const weekDays = [1, 2, 3, 4, 5];
 const weekendDays = [6, 0];
@@ -95,7 +95,7 @@ const Schedule = () => {
 				<div className="flex flex-row gap-1 justify-between">
 					<div className="flex flex-col gap-1">
 						{Array.from({ length: TOTAL_HOURS }, (_, i) => i + START_HOUR).map((time) => (
-							<div key={time} className="bg-slate-300 rounded-lg w-6 h-16 text-center font-bold">{time}</div>
+							<div key={time} className="bg-slate-300 rounded-xl w-6 h-16 text-center font-bold shadow-md">{time}</div>
 						))}
 					</div>
 					{(isWeekend ? weekendDays : weekDays).map((day) => (
@@ -122,8 +122,8 @@ const Schedule = () => {
                     key={`${day}-${time}`}
                     onClick={() => handleSetSchedule(time, day)}
                     className={`
-                      text-slate-50 text-sm 
-                      rounded-lg p-1 overflow-hidden break-words 
+                      text-white text-sm 
+                      rounded-xl p-1 overflow-hidden break-words shadow-md
                       ${isWeekend ? "w-41" : "w-16"} 
                       ${ScheduleUtil.getColorById(schedule[day]?.[time]?.colorId)}
                     `}

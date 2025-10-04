@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import ScheduleUtil, { SubScheduleItem } from "@/utils/Schedule";
+import ScheduleUtil, { TodoItem } from "@/utils/Schedule";
 
 type Props = {
   onClose: () => void;
-  onSubmit: (data: SubScheduleItem) => void;
+  onSubmit: (data: TodoItem) => void;
   onDelete: () => void;
-  selectedItem: SubScheduleItem | null;
+  selectedItem: TodoItem | null;
 }
 
-const SubScheduleModal = ({ onClose, onSubmit, onDelete, selectedItem }: Props) => {
+const TodoModal = ({ onClose, onSubmit, onDelete, selectedItem }: Props) => {
   const [title, setTitle] = useState(selectedItem?.title || "");
   const [colorId, setColorId] = useState(selectedItem?.colorId ?? 0);
 
@@ -17,7 +17,7 @@ const SubScheduleModal = ({ onClose, onSubmit, onDelete, selectedItem }: Props) 
     event.preventDefault();
     onSubmit({ 
       id: selectedItem?.id || crypto.randomUUID(),
-      title: title.trim() || "세부 일정",
+      title: title.trim() || "할일",
       colorId
     });
   }
@@ -53,12 +53,12 @@ const SubScheduleModal = ({ onClose, onSubmit, onDelete, selectedItem }: Props) 
       >
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div className="text-2xl font-bold text-center">
-            {selectedItem ? "세부 일정 수정" : "세부 일정 등록"}
+            {selectedItem ? "할일 수정" : "할일 등록"}
           </div>
 
           <input 
-            type="text" 
-            placeholder="세부 일정"
+            type="text"
+            placeholder="할일"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             className={`w-full text-xl ${inputBaseStyle}`}
@@ -109,4 +109,4 @@ const SubScheduleModal = ({ onClose, onSubmit, onDelete, selectedItem }: Props) 
   )
 }
 
-export default SubScheduleModal;
+export default TodoModal;

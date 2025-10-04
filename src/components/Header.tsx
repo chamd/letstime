@@ -12,8 +12,15 @@ const Header = () => {
   const pathname = usePathname();
 
   return (
-    <header className="w-full h-16 fixed top-0 bg-slate-100 text-2xl font-bold flex items-center place-content-center z-2">
-      {title[pathname as keyof typeof title] || "Time"}
+    <header className="
+      w-full h-15 fixed top-0 
+      text-2xl font-semibold
+      flex items-center justify-center 
+      border border-slate-400/30
+      bg-white/60 z-2
+      backdrop-blur-md
+    ">
+      {title[pathname as keyof typeof title] || "홈"}
     </header>
   );
 };

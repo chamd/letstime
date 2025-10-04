@@ -50,7 +50,7 @@ const ScheduleModal = ({ onClose, onSubmit, onDelete, selectedItem }: Props) => 
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: 10, opacity: 0 }}
         transition={{ ease: "easeIn", duration: 0.2 }}
-        className="fixed top-20 inset-x-0 w-80 h-auto mx-auto p-6 bg-slate-50 z-20 rounded-3xl"
+        className="fixed top-20 inset-x-0 w-80 h-auto mx-auto p-6 bg-white z-20 rounded-3xl"
       >
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div className="text-2xl font-bold text-center">
@@ -109,7 +109,7 @@ const ScheduleModal = ({ onClose, onSubmit, onDelete, selectedItem }: Props) => 
             )}
             <button 
               type="submit"
-              className={`text-slate-50 ${selectedItem ? "bg-green-500" : "bg-blue-500"} ${buttonBaseStyle}`}
+              className={`text-white ${selectedItem ? "bg-green-500" : "bg-blue-500"} ${buttonBaseStyle}`}
             >
               {selectedItem ? "수정" : "등록"}
             </button>

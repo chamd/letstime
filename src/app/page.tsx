@@ -43,7 +43,8 @@ const Home = () => {
     const d = new Date(now.toLocaleString('en-US', { timeZone }));
 		
     return {
-      today: d.getDay(),
+			today: d.getDay(),
+      tomonth: d.getMonth() + 1,
       todate: d.getDate(),
       tohour: d.getHours(),
     };
@@ -120,24 +121,32 @@ const Home = () => {
           />
         )}
       </AnimatePresence>
-			<div className="w-full max-w-91 mx-auto py-2">
-				<div 
+			<div className="w-full max-w-85 mx-auto py-4">
+				{/* <div 
 					className="
 						bg-slate-700 rounded-full w-30 h-10 
-						text-slate-50 font-bold text-center leading-10
-						mx-auto bottom-18 left-0 right-0 fixed z-2
+						text-white font-bold text-center leading-10
+						mx-auto top-18 left-0 right-0 fixed z-2
 				">
 					{dayNames[kst.today]}({kst.todate}) {kst.tohour}시
+					</div> */}
+				<div className="
+					w-full h-18 mb-4 
+					text-white font-semibold text-center text-xl leading-18
+					rounded-xl shadow-md
+					bg-linear-to-r from-blue-400 via-sky-400 to-cyan-400
+				">
+					{kst.tomonth}/{kst.todate}({dayNames[kst.today]}) {kst.tohour}시
 				</div>
 
-				<div className="flex flex-row gap-1 pb-12">
+				<div className="flex flex-row gap-1 pb-0">
 					<div className="flex flex-col gap-1">
 						{Array.from({ length: TOTAL_HOURS }, (_, i) => i + START_HOUR).map((time) => (
 							<div 
 								key={time} 
 								className={`
-									rounded-lg w-6 h-16 text-center font-bold duration-200
-									${kst.tohour == time ? "bg-blue-500 text-slate-50 scale-120" : "bg-slate-300 text-slate-950"}
+									rounded-xl w-6 h-18 text-center font-bold duration-200 shadow-md
+									${kst.tohour == time ? "bg-blue-500 text-white scale-120" : "bg-slate-300 text-black"}
 								`}
 							>
 									{time}
@@ -160,7 +169,7 @@ const Home = () => {
 							}
 
 							const l = item?.long || 1;
-							const rowHeight = 4;
+							const rowHeight = 4.5;
 							const gapHeight = 0.25;
 							const height = rowHeight * l + gapHeight * (l - 1);
 
@@ -168,7 +177,11 @@ const Home = () => {
 								<div
 									key={`${kst.today}-${time}`}
 									className={`
-										rounded-lg w-full bg-slate-200 relative p-1 flex gap-1
+										rounded-xl w-full relative p-2 flex gap-1 shadow-md
+										${ScheduleUtil.getColorById(
+											schedule[kst.today]?.[time]?.colorId,
+											"light"
+										)}
 									`}
 									style={{ height: `${height}rem` }}
 									onClick={() => handleAddSubSchedule(time)}
@@ -189,7 +202,7 @@ const Home = () => {
 										{subSchedule?.today?.[time]?.map((sub, index) => (
 											<div 
 												key={`today-${time}-${index}`}
-												className={`${ScheduleUtil.getColorById(sub.colorId)} text-slate-50 px-2 rounded-full w-auto text-center`}
+												className={`${ScheduleUtil.getColorById(sub.colorId)} text-white px-2 rounded-full w-auto text-center duration-100 active:scale-95`}
 												onClick={(e) => handleSetSubSchedule(e, time, sub)}
 											>
 												{sub.title}

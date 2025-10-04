@@ -2,8 +2,8 @@
 	"name": "Time",
 	"short_name": "Time",
 	"description": "시간을 Compact하게 관리하다. Time.",
-	"theme_color": "#f8fafc",
-	"background_color": "#f8fafc",
+	"theme_color": "#f1f5f9",
+	"background_color": "#f1f5f9",
 	"icons": [
 		{
 			"src": "/icon/512.png",
