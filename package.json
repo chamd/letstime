@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "prebuild": "bash scripts/update-version.sh"
   },
   "dependencies": {
     "date-fns": "^4.1.0",
