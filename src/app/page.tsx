@@ -121,7 +121,7 @@ const Home = () => {
           />
         )}
       </AnimatePresence>
-			<div className="w-full max-w-85 mx-auto py-4">
+			<div className="w-full mx-auto p-4">
 				{/* <div 
 					className="
 						bg-slate-700 rounded-full w-30 h-10 

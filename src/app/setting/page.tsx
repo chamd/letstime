@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { appVersion, appBranch } from "@/lib/version";
+import { appVersion } from "@/lib/version";
 
 const Block = ({ children }: {
   children: React.ReactNode;
@@ -74,7 +74,8 @@ const Setting = () => {
 				<BlockButton onClick={() => handleClearData("subScheduleData")}>삭제</BlockButton>
 			</Block>
 			<Block>
-				v{appVersion} ({appBranch})
+				v{appVersion}
+				<BlockButton onClick={() => window.open("https://github.com/chamd/letstime", "_blank", "noopener,noreferrer")}>Github</BlockButton>
 			</Block>
 		</div>
 	);
