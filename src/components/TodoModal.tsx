@@ -18,7 +18,8 @@ const TodoModal = ({ onClose, onSubmit, onDelete, selectedItem }: Props) => {
     onSubmit({ 
       id: selectedItem?.id || crypto.randomUUID(),
       title: title.trim() || "할일",
-      colorId
+      colorId,
+      done: false
     });
   }
 

@@ -32,9 +32,10 @@ type TodoItem = {
   id: string;
   title: string;
   colorId: number;
+  done: boolean;
 }
 
-type TodoState = [TodoItem]
+type TodoState = TodoItem[];
 
 const colors = [
   "bg-red-400",
@@ -47,13 +48,13 @@ const colors = [
 ];
 
 const lightColors = [
-  "bg-red-100",
-  "bg-amber-100",
-  "bg-lime-100",
-  "bg-emerald-100",
-  "bg-sky-100",
-  "bg-blue-100",
-  "bg-purple-100",
+  "bg-red-200",
+  "bg-amber-200",
+  "bg-lime-200",
+  "bg-emerald-200",
+  "bg-sky-200",
+  "bg-blue-200",
+  "bg-purple-200",
 ];
 
 const getColorById = (id: number, type: string = "normal"): string => {

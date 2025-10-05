@@ -7,7 +7,7 @@ const Block = ({ children }: {
   children: React.ReactNode;
 }) => {
   return (
-    <div className="bg-white shadow-lg shadow-slate-200 w-full p-4 text-lg font-bold rounded-2xl flex place-content-between items-center">
+    <div className="bg-white shadow-lg shadow-slate-200 w-full p-4 text-lg font-bold rounded-2xl flex justify-between items-center">
       {children}
     </div>
   );
@@ -72,6 +72,10 @@ const Setting = () => {
 			<Block>
 				하루 스케쥴 데이터 삭제
 				<BlockButton onClick={() => handleClearData("subScheduleData")}>삭제</BlockButton>
+			</Block>
+			<Block>
+				할일 데이터 삭제
+				<BlockButton onClick={() => handleClearData("todoData")}>삭제</BlockButton>
 			</Block>
 			<Block>
 				v{appVersion}

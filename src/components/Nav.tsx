@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { GoHome, GoCheckbox, GoCalendar, GoGear } from "react-icons/go";
 
-const navItemStyle = "w-7 text-2xl flex place-content-center items-center duration-200";
+const navItemStyle = "w-8 text-2xl flex place-content-center items-center duration-200";
 const navDefaultStyle = "text-slate-400";
 const navSelectedStyle = "text-blue-500 border-b-3 border-blue-500 mb-1";
 
@@ -23,7 +23,7 @@ const Nav = () => {
 
   return (
     <nav className="
-      w-60 h-14 fixed 
+      w-70 h-15 fixed 
       mx-auto left-0 right-0 bottom-4
       rounded-full shadow-xl
       border border-slate-400/30
