@@ -49,7 +49,7 @@ const Todo = () => {
     close();
   }
 
-  const handleSetTodo = (item: TodoItem) => {
+  const handleSetTodo = (item: TodoItem | null) => {
     setSelectedItem(item);
     open();
   }
@@ -104,7 +104,7 @@ const Todo = () => {
         </div>
 
         <div 
-          onClick={open}
+          onClick={() => handleSetTodo(null)}
           className="
             fixed w-12 h-12 right-4
             bg-white rounded-full shadow-md text-3xl
@@ -128,7 +128,7 @@ const Todo = () => {
                 onClick={() => handleSetTodo(item)}
                 className={`
                   shadow-lg shadow-slate-200 
-                  w-full p-3 text-md font-semibold rounded-xl
+                  w-full p-3 text-md font-semibold rounded-xl break-keep
                   flex gap-4 items-center justify-between
                   ${ScheduleUtil.getColorById(item.colorId, "light")}
                   ${item.done ? 'italic' : ''}

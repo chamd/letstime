@@ -122,14 +122,6 @@ const Home = () => {
         )}
       </AnimatePresence>
 			<div className="w-full mx-auto p-4">
-				{/* <div 
-					className="
-						bg-slate-700 rounded-full w-30 h-10 
-						text-white font-bold text-center leading-10
-						mx-auto top-18 left-0 right-0 fixed z-2
-				">
-					{dayNames[kst.today]}({kst.todate}) {kst.tohour}시
-					</div> */}
 				<div className="
 					w-full h-18 mb-4 
 					text-white font-semibold text-center text-xl leading-18
